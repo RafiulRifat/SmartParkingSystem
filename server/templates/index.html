@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Smart Parking System
+</title>
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}"
+>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =========================
+HEADER
+========================= -->
+
+<h1 class="main-title">
+
+<span class="moving-car">
+🚗
+</span>
+
+Smart Parking System
+
+</h1>
+
+
+<p class="subtitle">
+
+ESP32 IoT Monitoring Dashboard
+
+</p>
+
+
+<!-- =========================
+NAVIGATION
+========================= -->
+
+<div class="navbar">
+
+<a href="/" class="nav-btn">
+🏠 Dashboard
+</a>
+
+
+<a href="/reservation" class="nav-btn">
+📱 Reserve Parking
+</a>
+
+
+<a href="/history" class="nav-btn">
+📜 History
+</a>
+
+
+<a href="/admin" class="nav-btn">
+⚙️ Admin
+</a>
+
+</div>
+
+
+<!-- =========================
+SYSTEM OVERVIEW
+========================= -->
+
+<div class="card overview">
+
+<h2>
+📊 System Overview
+</h2>
+
+
+<div class="overview-grid">
+
+
+<div>
+
+<h3>
+Total Slots
+</h3>
+
+<h1>
+2
+</h1>
+
+</div>
+
+
+<div>
+
+<h3>
+Available
+</h3>
+
+<h1 id="overview_available">
+0
+</h1>
+
+</div>
+
+
+<div>
+
+<h3>
+Occupied
+</h3>
+
+<h1 id="overview_occupied">
+0
+</h1>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================
+PARKING GRID
+========================= -->
+
+<div class="grid">
+
+
+<!-- SLOT 1 -->
+
+<div class="card slot-card">
+
+<h2>
+🅿️ Parking Slot 1
+</h2>
+
+
+<h3
+id="slot1"
+class="slot-status"
+>
+WAITING
+</h3>
+
+
+<p>
+
+Distance:
+
+<span id="distance1">
+0
+</span>
+
+cm
+
+</p>
+
+
+<p>
+
+Status:
+
+<span id="slot1_info">
+Checking...
+</span>
+
+</p>
+
+</div>
+
+
+<!-- SLOT 2 -->
+
+<div class="card slot-card">
+
+<h2>
+🅿️ Parking Slot 2
+</h2>
+
+
+<h3
+id="slot2"
+class="slot-status"
+>
+WAITING
+</h3>
+
+
+<p>
+
+Distance:
+
+<span id="distance2">
+0
+</span>
+
+cm
+
+</p>
+
+
+<p>
+
+Status:
+
+<span id="slot2_info">
+Checking...
+</span>
+
+</p>
+
+</div>
+
+
+<!-- GATE -->
+
+<div class="card">
+
+<h2>
+🚧 Gate Status
+</h2>
+
+
+<h3 id="gate">
+CLOSED
+</h3>
+
+
+<div id="gate_animation">
+🚧
+</div>
+
+</div>
+
+
+<!-- AVAILABLE -->
+
+<div class="card">
+
+<h2>
+🅿️ Available Slots
+</h2>
+
+
+<h1 id="available">
+0
+</h1>
+
+
+<p>
+Out of 2 Parking Spaces
+</p>
+
+</div>
+
+
+<!-- PARKING STATUS -->
+
+<div class="card">
+
+<h2>
+⚠️ Parking Status
+</h2>
+
+
+<h3 id="parking_warning">
+CHECKING...
+</h3>
+
+</div>
+
+
+<!-- BUZZER -->
+
+<div class="card">
+
+<h2>
+🔔 Buzzer
+</h2>
+
+
+<h3 id="buzzer">
+OFF
+</h3>
+
+</div>
+
+<!-- CARS INSIDE -->
+
+<div class="card">
+
+<h2>
+🚘 Cars Inside
+</h2>
+
+
+<h1 id="cars_inside">
+0
+</h1>
+
+
+<p>
+Current Parking
+</p>
+
+</div>
+
+
+<!-- TOTAL ENTRY -->
+
+<div class="card">
+
+<h2>
+🚗 Total Entries
+</h2>
+
+
+<h1 id="total_entries">
+0
+</h1>
+
+
+<p>
+Vehicles Entered
+</p>
+
+</div>
+
+
+<!-- TOTAL EXIT -->
+
+<div class="card">
+
+<h2>
+🚙 Total Exit
+</h2>
+
+
+<h1 id="total_exit">
+0
+</h1>
+
+
+<p>
+Vehicles Exited
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+ESP32 + CAMERA STATUS
+========================= -->
+
+<div class="online">
+
+<span id="esp_status">
+🟢 ESP32 ONLINE
+</span>
+
+
+<br>
+
+
+Last Update:
+
+<span id="last_update">
+--:--:--
+</span>
+
+
+<br>
+
+
+Camera:
+
+<span id="camera_status">
+🔴 OFFLINE
+</span>
+
+</div>
+
+
+<!-- =========================
+CAMERA STATUS CARD
+NO LIVE STREAM HERE
+========================= -->
+
+<div class="card">
+
+<h2>
+📷 Raspberry Pi Camera
+</h2>
+
+
+<p style="text-align:center;">
+
+Camera Status:
+
+<strong id="camera_status_text">
+🔴 OFFLINE
+</strong>
+
+</p>
+
+
+<p
+id="camera_event_message"
+style="
+text-align:center;
+margin-top:15px;
+"
+>
+📷 Camera ready
+</p>
+
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+text-align:center;
+margin-top:20px;
+"
+>
+
+
+<div>
+
+<h3>
+Camera
+</h3>
+
+<p>
+Raspberry Pi Camera
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Live Stream
+</h3>
+
+<p id="camera_stream_status">
+🟢 Available in Admin
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Last Event
+</h3>
+
+<p id="last_camera_event">
+NONE
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Latest Photo
+</h3>
+
+<p id="latest_photo_status">
+NONE
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+<!-- =========================
+LATEST PARKING EVENT CAPTURE
+========================= -->
+
+<div
+class="card"
+id="capture_section"
+style="
+display:none;
+margin-top:20px;
+"
+>
+
+<h2>
+📸 Latest Parking Event Capture
+</h2>
+
+
+<p
+id="capture_event"
+style="
+text-align:center;
+font-weight:bold;
+"
+>
+Event: --
+</p>
+
+
+<img
+id="latest_capture"
+src=""
+alt="Latest parking event capture"
+style="
+width:100%;
+max-width:700px;
+height:auto;
+border-radius:12px;
+display:block;
+margin:15px auto;
+"
+>
+
+
+<p style="text-align:center;">
+
+<a
+id="capture_link"
+href="#"
+target="_blank"
+rel="noopener noreferrer"
+>
+Open Full Image
+</a>
+
+</p>
+
+
+<p
+id="capture_time"
+style="
+text-align:center;
+"
+>
+</p>
+
+</div>
+
+
+<!-- =========================
+SYSTEM INFORMATION
+========================= -->
+
+<div class="card">
+
+<h2>
+ℹ️ System Information
+</h2>
+
+
+<p>
+ESP32 Smart Parking Controller
+</p>
+
+
+<p>
+2 Ultrasonic Sensors + IR Entry/Exit System
+</p>
+
+
+<p>
+📱 Reservation System:
+Active
+</p>
+
+
+<p>
+📷 Raspberry Pi Camera:
+Active
+</p>
+
+
+<p>
+🎥 Live Video Streaming:
+Available in Admin Panel
+</p>
+
+
+<p>
+📸 Automatic Entry/Exit Capture:
+Active
+</p>
+
+
+<p>
+🤖 AI License Plate Detection:
+Ready for Integration
+</p>
+
+</div>
+
+
+<!-- =========================
+CAMERA LOCATION
+========================= -->
+
+<div class="card">
+
+<h2>
+🔐 Camera Monitoring
+</h2>
+
+
+<p>
+For security monitoring, the continuous Raspberry Pi live stream is available from the
+<strong>Admin Panel</strong>.
+</p>
+
+
+<a
+href="/admin"
+class="nav-btn"
+style="
+display:inline-block;
+margin-top:10px;
+"
+>
+⚙️ Open Admin Camera
+</a>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+JAVASCRIPT
+========================= -->
+
+<script
+src="{{ url_for('static', filename='script.js') }}">
+</script>
+
+
+</body>
+
+</html>

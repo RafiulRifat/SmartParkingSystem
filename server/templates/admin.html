@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Smart Parking Admin
+</title>
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}"
+>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =========================
+HEADER
+========================= -->
+
+<h1>
+⚙️ Admin Panel
+</h1>
+
+
+<p class="subtitle">
+Smart Parking System Control Center
+</p>
+
+
+<!-- =========================
+ADMIN NAVIGATION
+========================= -->
+
+<div class="navbar">
+
+<a href="/" class="nav-btn">
+🏠 Dashboard
+</a>
+
+
+<a href="/reservation" class="nav-btn">
+📱 Reservation
+</a>
+
+
+<a href="/history" class="nav-btn">
+📜 History
+</a>
+
+
+<a href="/logout" class="nav-btn">
+🚪 Logout
+</a>
+
+</div>
+
+
+<!-- =========================
+LIVE SLOT MONITOR
+========================= -->
+
+<div class="card">
+
+<h2>
+🅿️ Live Parking Slots
+</h2>
+
+
+<div class="grid">
+
+
+<!-- SLOT 1 -->
+
+<div class="card slot-card">
+
+<h2>
+Slot 1
+</h2>
+
+
+<h3 id="admin_slot1">
+WAITING
+</h3>
+
+
+<p>
+Distance:
+
+<span id="admin_distance1">
+0
+</span>
+
+cm
+</p>
+
+</div>
+
+
+<!-- SLOT 2 -->
+
+<div class="card slot-card">
+
+<h2>
+Slot 2
+</h2>
+
+
+<h3 id="admin_slot2">
+WAITING
+</h3>
+
+
+<p>
+Distance:
+
+<span id="admin_distance2">
+0
+</span>
+
+cm
+
+</p>
+
+</div>
+
+
+<!-- AVAILABLE -->
+
+<div class="card">
+
+<h2>
+🅿️ Available Slots
+</h2>
+
+
+<h1 id="admin_available">
+0
+</h1>
+
+
+<p>
+Out of 2 Slots
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================
+LIVE STATISTICS
+========================= -->
+
+<div class="grid">
+
+
+<!-- CARS INSIDE -->
+
+<div class="card">
+
+<h2>
+🚘 Cars Inside
+</h2>
+
+
+<h1 id="cars_inside">
+0
+</h1>
+
+
+<p>
+Current Parking
+</p>
+
+</div>
+
+
+<!-- TOTAL ENTRIES -->
+
+<div class="card">
+
+<h2>
+🚗 Total Entries
+</h2>
+
+
+<h1 id="total_entries">
+0
+</h1>
+
+
+<p>
+Vehicles Entered
+</p>
+
+</div>
+
+
+<!-- TOTAL EXIT -->
+
+<div class="card">
+
+<h2>
+🚙 Total Exit
+</h2>
+
+
+<h1 id="total_exit">
+0
+</h1>
+
+
+<p>
+Vehicles Exited
+</p>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="card">
+
+<h2>
+📜 History Records
+</h2>
+
+
+<h1 id="total_records">
+0
+</h1>
+
+
+<p>
+Saved Events
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+STATISTICS
+========================= -->
+
+<div class="grid">
+
+
+<!-- TODAY EVENTS -->
+
+<div class="card">
+
+<h2>
+📅 Today Events
+</h2>
+
+
+<h1 id="today_events">
+0
+</h1>
+
+
+<p>
+Today's Activity
+</p>
+
+</div>
+
+
+<!-- DAILY ENTRY -->
+
+<div class="card">
+
+<h2>
+📈 Daily Entry
+</h2>
+
+
+<h1 id="daily_entry">
+0
+</h1>
+
+
+<p>
+Today Vehicles In
+</p>
+
+</div>
+
+
+<!-- DAILY EXIT -->
+
+<div class="card">
+
+<h2>
+📉 Daily Exit
+</h2>
+
+
+<h1 id="daily_exit">
+0
+</h1>
+
+
+<p>
+Today Vehicles Out
+</p>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+RASPBERRY PI LIVE CAMERA
+========================= -->
+
+<div class="card camera-preview">
+
+<h2>
+📷 Raspberry Pi Live Camera
+</h2>
+
+
+<!-- CAMERA STATUS -->
+
+<div
+style="
+text-align:center;
+margin-bottom:20px;
+font-size:18px;
+"
+>
+
+Camera Status:
+
+<strong id="admin_camera_status">
+🔴 OFFLINE
+</strong>
+
+</div>
+
+
+<!-- LIVE VIDEO -->
+
+<div
+style="
+width:100%;
+max-width:1000px;
+margin:0 auto;
+text-align:center;
+background:#000;
+border-radius:12px;
+overflow:hidden;
+"
+>
+
+<img
+id="admin_live_camera"
+src="{{ url_for('video_feed') }}"
+alt="Raspberry Pi Live Camera"
+style="
+display:block;
+width:100%;
+max-width:1000px;
+height:auto;
+min-height:400px;
+object-fit:contain;
+background:#000;
+margin:auto;
+"
+>
+
+</div>
+
+
+<p
+id="admin_camera_message"
+style="
+text-align:center;
+margin-top:15px;
+"
+>
+
+📷 Waiting for camera...
+
+</p>
+
+
+</div>
+
+
+<!-- =========================
+LATEST EVENT PHOTO
+========================= -->
+
+<div class="card">
+
+<h2>
+📸 Latest Parking Event Capture
+</h2>
+
+
+<div
+id="admin_capture_section"
+style="
+display:none;
+text-align:center;
+"
+>
+
+
+<p id="admin_capture_event">
+Event: --
+</p>
+
+
+<img
+id="admin_latest_capture"
+src=""
+alt="Latest parking event capture"
+style="
+width:100%;
+max-width:750px;
+height:auto;
+border-radius:12px;
+display:block;
+margin:20px auto;
+"
+>
+
+
+<p>
+
+<a
+id="admin_capture_link"
+href="#"
+target="_blank"
+rel="noopener noreferrer"
+>
+🔗 Open Full Image
+</a>
+
+</p>
+
+
+<p id="admin_capture_time">
+</p>
+
+
+</div>
+
+
+<p
+id="admin_no_capture"
+style="
+text-align:center;
+"
+>
+
+No parking event photo yet.
+
+</p>
+
+</div>
+
+
+<!-- =========================
+CAMERA INFORMATION
+========================= -->
+
+<div class="card">
+
+<h2>
+📡 Camera System Information
+</h2>
+
+
+<div
+style="
+display:grid;
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(180px,1fr)
+);
+gap:20px;
+text-align:center;
+"
+>
+
+
+<!-- CAMERA -->
+
+<div>
+
+<h3>
+Camera
+</h3>
+
+<p>
+Raspberry Pi Camera
+</p>
+
+</div>
+
+
+<!-- STREAM -->
+
+<div>
+
+<h3>
+Live Stream
+</h3>
+
+<p id="admin_stream_status">
+Checking...
+</p>
+
+</div>
+
+
+<!-- LAST EVENT -->
+
+<div>
+
+<h3>
+Last Event
+</h3>
+
+<p id="admin_last_event">
+NONE
+</p>
+
+</div>
+
+
+<!-- LATEST PHOTO -->
+
+<div>
+
+<h3>
+Latest Photo
+</h3>
+
+<p id="admin_photo_status">
+NONE
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================
+RESERVATION MANAGEMENT
+========================= -->
+
+<div class="card">
+
+<h2>
+📱 Parking Reservations
+</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+ID
+</th>
+
+<th>
+Name
+</th>
+
+<th>
+Phone
+</th>
+
+<th>
+Slot
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="reservation_table">
+
+<tr>
+
+<td colspan="8">
+Loading Reservations...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- =========================
+PARKING ANALYTICS
+========================= -->
+
+<div class="card">
+
+<h2>
+📊 Parking Analytics
+</h2>
+
+
+<canvas id="parkingChart">
+</canvas>
+
+</div>
+
+
+<!-- =========================
+CONTROL PANEL
+========================= -->
+
+<div class="card">
+
+<h2>
+🛠 Control Panel
+</h2>
+
+
+<button
+onclick="clearHistory()"
+class="admin-btn danger"
+>
+🗑 Clear History
+</button>
+
+
+<button
+onclick="resetCounter()"
+class="admin-btn warning"
+>
+🔄 Reset Counter
+</button>
+
+
+<a
+href="/export"
+class="history-btn"
+>
+📥 Download CSV Report
+</a>
+
+
+<a
+href="/history"
+class="history-btn"
+>
+📜 View History
+</a>
+
+</div>
+
+
+<!-- =========================
+MESSAGE
+========================= -->
+
+<div
+id="message"
+class="online"
+>
+Ready
+</div>
+
+
+<a
+href="/"
+class="history-btn"
+>
+⬅ Back Dashboard
+</a>
+
+
+</div>
+
+
+<!-- =========================
+CHART LIBRARY
+========================= -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
+
+
+<!-- =========================
+ADMIN JAVASCRIPT
+========================= -->
+
+<script
+src="{{ url_for('static', filename='admin.js') }}">
+</script>
+
+
+<!-- =========================
+RASPBERRY PI CAMERA STATUS
+========================= -->
+
+<script>
+
+let adminLastCapture = null;
+
+
+/* =====================================
+   GET EVENT FROM CAPTURE FILE
+   SERVER PHOTO IS AUTHORITATIVE
+===================================== */
+
+function getAdminEventFromCapture(
+    captureUrl,
+    fallbackEvent
+) {
+
+    const url =
+        String(
+            captureUrl || ""
+        ).toLowerCase();
+
+
+    /*
+       The filename generated by Flask
+       contains either "entry" or "exit".
+    */
+
+    if (url.includes("entry")) {
+
+        return "ENTRY";
+
+    }
+
+
+    if (url.includes("exit")) {
+
+        return "EXIT";
+
+    }
+
+
+    /*
+       Fallback only if the filename
+       does not contain the event name.
+    */
+
+    const fallback =
+        String(
+            fallbackEvent || "NONE"
+        ).toUpperCase();
+
+
+    if (
+        fallback === "ENTRY" ||
+        fallback === "EXIT"
+    ) {
+
+        return fallback;
+
+    }
+
+
+    return "NONE";
+
+}
+
+
+/* =====================================
+   UPDATE ADMIN CAMERA
+===================================== */
+
+async function updateAdminCamera() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/status",
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Status request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /* =========================
+           CAMERA STATUS
+        ========================= */
+
+        const status =
+            document.getElementById(
+                "admin_camera_status"
+            );
+
+
+        const streamStatus =
+            document.getElementById(
+                "admin_stream_status"
+            );
+
+
+        const message =
+            document.getElementById(
+                "admin_camera_message"
+            );
+
+
+        if (
+            data.camera_online === true
+        ) {
+
+            if (status) {
+
+                status.innerHTML =
+                    "🟢 ONLINE";
+
+            }
+
+
+            if (streamStatus) {
+
+                streamStatus.innerHTML =
+                    "🟢 LIVE";
+
+            }
+
+
+            if (message) {
+
+                message.innerHTML =
+                    "📷 Raspberry Pi camera is live";
+
+            }
+
+        }
+
+        else {
+
+            if (status) {
+
+                status.innerHTML =
+                    "🔴 OFFLINE";
+
+            }
+
+
+            if (streamStatus) {
+
+                streamStatus.innerHTML =
+                    "🔴 OFFLINE";
+
+            }
+
+
+            if (message) {
+
+                message.innerHTML =
+                    "⚠️ Raspberry Pi camera is offline";
+
+            }
+
+        }
+
+
+        /* =========================
+           LATEST CAPTURE
+        ========================= */
+
+        const capture =
+            data.latest_capture;
+
+
+        /*
+           Determine the event from the
+           actual saved photo filename.
+        */
+
+        const captureEvent =
+            getAdminEventFromCapture(
+                capture,
+                data.event
+            );
+
+
+        /* =========================
+           LAST EVENT
+        ========================= */
+
+        const lastEvent =
+            document.getElementById(
+                "admin_last_event"
+            );
+
+
+        if (lastEvent) {
+
+            if (
+                capture
+            ) {
+
+                if (
+                    captureEvent === "ENTRY"
+                ) {
+
+                    lastEvent.innerHTML =
+                        "🚗 ENTRY";
+
+                }
+
+                else if (
+                    captureEvent === "EXIT"
+                ) {
+
+                    lastEvent.innerHTML =
+                        "🚙 EXIT";
+
+                }
+
+                else {
+
+                    lastEvent.innerHTML =
+                        "📷 NONE";
+
+                }
+
+            }
+
+            else {
+
+                lastEvent.innerHTML =
+                    "NONE";
+
+            }
+
+        }
+
+
+        /* =========================
+           NEW CAPTURE
+        ========================= */
+
+        if (
+            capture &&
+            capture !== adminLastCapture
+        ) {
+
+            adminLastCapture =
+                capture;
+
+
+            showAdminCapture(
+                capture,
+                captureEvent,
+                data.last_update
+            );
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.log(
+            "ADMIN CAMERA ERROR:",
+            error
+        );
+
+
+        const status =
+            document.getElementById(
+                "admin_camera_status"
+            );
+
+
+        const streamStatus =
+            document.getElementById(
+                "admin_stream_status"
+            );
+
+
+        const message =
+            document.getElementById(
+                "admin_camera_message"
+            );
+
+
+        const lastEvent =
+            document.getElementById(
+                "admin_last_event"
+            );
+
+
+        if (status) {
+
+            status.innerHTML =
+                "🔴 OFFLINE";
+
+        }
+
+
+        if (streamStatus) {
+
+            streamStatus.innerHTML =
+                "🔴 OFFLINE";
+
+        }
+
+
+        if (message) {
+
+            message.innerHTML =
+                "⚠️ Unable to connect to camera";
+
+        }
+
+
+        if (lastEvent) {
+
+            lastEvent.innerHTML =
+                "NONE";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================
+   SHOW ADMIN CAPTURE
+===================================== */
+
+function showAdminCapture(
+    captureUrl,
+    event,
+    captureTime
+) {
+
+    const section =
+        document.getElementById(
+            "admin_capture_section"
+        );
+
+
+    const noCapture =
+        document.getElementById(
+            "admin_no_capture"
+        );
+
+
+    const image =
+        document.getElementById(
+            "admin_latest_capture"
+        );
+
+
+    const link =
+        document.getElementById(
+            "admin_capture_link"
+        );
+
+
+    const eventText =
+        document.getElementById(
+            "admin_capture_event"
+        );
+
+
+    const timeText =
+        document.getElementById(
+            "admin_capture_time"
+        );
+
+
+    const photoStatus =
+        document.getElementById(
+            "admin_photo_status"
+        );
+
+
+    if (!image) {
+
+        return;
+
+    }
+
+
+    /* =========================
+       CACHE BUSTER
+    ========================= */
+
+    image.src =
+        captureUrl +
+        (
+            captureUrl.includes("?")
+                ? "&"
+                : "?"
+        ) +
+        "t=" +
+        Date.now();
+
+
+    /* =========================
+       LINK
+    ========================= */
+
+    if (link) {
+
+        link.href =
+            captureUrl;
+
+    }
+
+
+    /* =========================
+       EVENT
+    ========================= */
+
+    if (eventText) {
+
+        if (
+            event === "ENTRY"
+        ) {
+
+            eventText.innerHTML =
+                "🚗 ENTRY CAPTURE";
+
+        }
+
+        else if (
+            event === "EXIT"
+        ) {
+
+            eventText.innerHTML =
+                "🚙 EXIT CAPTURE";
+
+        }
+
+        else {
+
+            eventText.innerHTML =
+                "📸 PARKING EVENT";
+
+        }
+
+    }
+
+
+    /* =========================
+       TIME
+    ========================= */
+
+    if (timeText) {
+
+        timeText.innerHTML =
+            captureTime
+                ? "Captured at: " +
+                  captureTime
+                : "";
+
+    }
+
+
+    /* =========================
+       PHOTO STATUS
+    ========================= */
+
+    if (photoStatus) {
+
+        photoStatus.innerHTML =
+            "📸 Available";
+
+    }
+
+
+    /* =========================
+       SHOW CAPTURE
+    ========================= */
+
+    if (noCapture) {
+
+        noCapture.style.display =
+            "none";
+
+    }
+
+
+    if (section) {
+
+        section.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =====================================
+   START CAMERA UPDATES
+===================================== */
+
+updateAdminCamera();
+
+
+setInterval(
+    updateAdminCamera,
+    1000
+);
+
+</script>
+
+
+</body>
+
+</html>

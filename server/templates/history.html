@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Parking History
+</title>
+
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}"
+>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<h1>
+
+📜 Parking History
+
+</h1>
+
+
+
+<p class="subtitle">
+
+Smart Parking Entry & Exit Records
+
+</p>
+
+
+
+
+
+<!-- TOTAL RECORDS -->
+
+
+<div class="card">
+
+
+<h2>
+
+📊 Total Records
+
+</h2>
+
+
+
+<h1 id="recordCount">
+
+0
+
+</h1>
+
+
+
+<p>
+
+Saved Parking Events
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- HISTORY TABLE -->
+
+
+<div class="card">
+
+
+<table id="historyTable">
+
+
+<thead>
+
+
+<tr>
+
+
+<th>ID</th>
+
+<th>Time</th>
+
+<th>Slot 1</th>
+
+<th>Slot 2</th>
+
+<th>Inside</th>
+
+<th>Entry</th>
+
+<th>Exit</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+<tbody>
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+<a href="/" class="history-btn">
+
+
+⬅ Back Dashboard
+
+
+</a>
+
+
+
+
+
+
+<a href="#" onclick="exportCSV()" class="history-btn">
+
+
+📥 Export CSV
+
+
+</a>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+let historyData = [];
+
+
+
+
+// =====================================
+// LOAD HISTORY DATA
+// =====================================
+
+
+async function loadHistory(){
+
+
+try{
+
+
+const response = await fetch("/history-data");
+
+
+historyData = await response.json();
+
+
+
+
+const table =
+document.querySelector(
+"#historyTable tbody"
+);
+
+
+
+if(!table)
+return;
+
+
+
+table.innerHTML = "";
+
+
+
+
+
+historyData.forEach(row=>{
+
+
+
+table.innerHTML += `
+
+
+<tr>
+
+
+<td>
+${row.id ?? 0}
+</td>
+
+
+
+<td>
+${row.time ?? "--"}
+</td>
+
+
+
+<td>
+${row.slot1 ?? "EMPTY"}
+</td>
+
+
+
+<td>
+${row.slot2 ?? "EMPTY"}
+</td>
+
+
+
+<td>
+${row.cars_inside ?? 0}
+</td>
+
+
+
+<td>
+${row.total_entries ?? 0}
+</td>
+
+
+
+<td>
+${row.total_exit ?? 0}
+</td>
+
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+
+document.getElementById(
+"recordCount"
+).innerHTML =
+historyData.length;
+
+
+
+
+
+console.log(
+"History Updated:",
+historyData
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.log(
+"History Error:",
+error
+);
+
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// EXPORT CSV
+// =====================================
+
+
+function exportCSV(){
+
+
+
+if(historyData.length === 0){
+
+
+alert(
+"No history data available"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+let csv =
+
+"ID,Time,Slot1,Slot2,Cars Inside,Entry,Exit\n";
+
+
+
+
+
+
+
+historyData.forEach(row=>{
+
+
+csv +=
+
+`${row.id ?? 0},`+
+`${row.time ?? ""},`+
+`${row.slot1 ?? ""},`+
+`${row.slot2 ?? ""},`+
+`${row.cars_inside ?? 0},`+
+`${row.total_entries ?? 0},`+
+`${row.total_exit ?? 0}\n`;
+
+
+
+});
+
+
+
+
+
+
+
+
+let blob =
+
+new Blob(
+
+[csv],
+
+{
+
+type:"text/csv"
+
+}
+
+);
+
+
+
+
+
+
+let url =
+
+URL.createObjectURL(blob);
+
+
+
+
+
+
+let a =
+
+document.createElement("a");
+
+
+
+a.href=url;
+
+
+a.download="parking_history.csv";
+
+
+a.click();
+
+
+
+URL.revokeObjectURL(url);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// FIRST LOAD
+
+loadHistory();
+
+
+
+
+
+// AUTO REFRESH
+
+setInterval(
+
+loadHistory,
+
+2000
+
+);
+
+
+
+</script>
+
+
+
+</body>
+
+
+</html>

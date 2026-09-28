@@ -1,0 +1,1333 @@
+*{
+
+    box-sizing:border-box;
+
+    font-family:"Segoe UI",sans-serif;
+
+}
+
+
+
+
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(135deg,#07111f,#16243b);
+
+    color:white;
+
+}
+
+
+
+
+
+.container{
+
+    width:90%;
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding-top:40px;
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   HEADER
+=========================== */
+
+
+h1{
+
+    text-align:center;
+
+    font-size:42px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+
+.main-title{
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    align-items:center;
+
+
+    gap:15px;
+
+
+}
+
+
+
+
+
+.moving-car{
+
+
+    display:inline-block;
+
+
+    animation:carMove 3s ease-in-out infinite;
+
+
+}
+
+
+
+
+
+@keyframes carMove{
+
+
+    0%{
+
+        transform:translateX(0);
+
+    }
+
+
+    25%{
+
+        transform:translateX(-80px);
+
+    }
+
+
+    50%{
+
+        transform:translateX(0);
+
+    }
+
+
+    75%{
+
+        transform:translateX(-80px);
+
+    }
+
+
+    100%{
+
+        transform:translateX(0);
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+.subtitle{
+
+
+    text-align:center;
+
+
+    color:#9fb3cc;
+
+
+    font-size:20px;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   NAVIGATION
+=========================== */
+
+
+.navbar{
+
+
+    display:flex;
+
+
+    justify-content:center;
+
+
+    gap:15px;
+
+
+    margin-bottom:35px;
+
+
+    flex-wrap:wrap;
+
+
+}
+
+
+
+
+
+.nav-btn{
+
+
+    padding:15px 25px;
+
+
+    background:#075c2c;
+
+
+    color:white;
+
+
+    border-radius:15px;
+
+
+    text-decoration:none;
+
+
+    font-size:18px;
+
+
+    font-weight:bold;
+
+
+    transition:0.3s;
+
+
+}
+
+
+
+
+
+.nav-btn:hover{
+
+
+    background:#0a8f46;
+
+
+    transform:translateY(-3px);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   SYSTEM OVERVIEW
+=========================== */
+
+
+.overview{
+
+
+    margin-bottom:30px;
+
+
+}
+
+
+
+
+
+.overview-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:repeat(3,1fr);
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+.overview-grid div{
+
+
+    background:rgba(255,255,255,0.08);
+
+
+    border-radius:15px;
+
+
+    padding:15px;
+
+
+}
+
+
+
+
+
+.overview-grid h1{
+
+
+    color:#38bdf8;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   GRID
+=========================== */
+
+
+.grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:repeat(2,1fr);
+
+
+    gap:25px;
+
+
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+
+.card{
+
+
+    background:
+
+    rgba(255,255,255,0.08);
+
+
+
+    border:1px solid rgba(255,255,255,0.15);
+
+
+
+    border-radius:22px;
+
+
+
+    padding:35px;
+
+
+
+    text-align:center;
+
+
+
+    box-shadow:
+
+
+    0 10px 30px rgba(0,0,0,0.3);
+
+
+
+    transition:0.3s;
+
+
+
+}
+
+
+
+
+.card:hover{
+
+
+    transform:translateY(-5px);
+
+
+}
+
+
+
+
+
+.card h2{
+
+
+    font-size:25px;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+
+
+.card h1{
+
+
+    font-size:60px;
+
+
+    margin:10px;
+
+
+}
+
+
+
+
+
+
+.card h3{
+
+
+    font-size:35px;
+
+
+    margin:10px;
+
+
+}
+
+
+
+
+
+
+.card p{
+
+
+    color:#c5d2e5;
+
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   STEP 1
+   PARKING SLOT STATUS
+=========================== */
+
+
+.slot-card{
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+
+
+
+.slot-status{
+
+
+    font-size:35px;
+
+
+    font-weight:bold;
+
+
+    padding:10px;
+
+
+    border-radius:15px;
+
+
+    transition:0.4s;
+
+
+}
+
+
+
+
+
+
+
+/* SLOT AVAILABLE */
+
+
+.slot-available{
+
+
+    color:#22c55e;
+
+
+    background:
+
+    rgba(34,197,94,0.15);
+
+
+    box-shadow:
+
+    0 0 20px rgba(34,197,94,0.4);
+
+
+}
+
+
+
+
+
+
+
+
+/* SLOT OCCUPIED */
+
+
+.slot-occupied{
+
+
+    color:#ef4444;
+
+
+    background:
+
+    rgba(239,68,68,0.15);
+
+
+    box-shadow:
+
+    0 0 20px rgba(239,68,68,0.4);
+
+
+}
+
+
+
+
+
+
+
+
+/* SLOT WAITING */
+
+
+.slot-waiting{
+
+
+    color:#facc15;
+
+
+    background:
+
+    rgba(250,204,21,0.15);
+
+
+}
+
+
+
+
+
+
+
+.slot-info{
+
+
+    font-size:18px;
+
+
+    margin-top:10px;
+
+
+}
+
+
+
+
+
+
+
+
+#slot1_info,
+#slot2_info{
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   GATE
+=========================== */
+
+
+#gate{
+
+
+    color:#f59e0b;
+
+
+}
+
+
+
+
+
+
+#gate_animation{
+
+
+    margin-top:20px;
+
+
+    font-size:35px;
+
+
+    animation:gateMove 1s infinite alternate;
+
+
+}
+
+
+
+
+
+
+@keyframes gateMove{
+
+
+    from{
+
+
+        transform:translateY(0);
+
+
+    }
+
+
+
+    to{
+
+
+        transform:translateY(-8px);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   BUZZER
+=========================== */
+
+
+#buzzer{
+
+
+    color:#38bdf8;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   AVAILABLE
+=========================== */
+
+
+#available{
+
+
+    font-size:65px;
+
+
+    color:#38bdf8;
+
+
+}
+
+/* ===========================
+   WARNING
+=========================== */
+
+
+#parking_warning{
+
+
+    color:#22c55e;
+
+
+    font-size:30px;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+
+
+
+.parking-full{
+
+
+    color:#ef4444 !important;
+
+
+    animation:warningBlink 1s infinite;
+
+
+}
+
+
+
+
+
+
+.parking-space{
+
+
+    color:#22c55e !important;
+
+
+}
+
+
+
+
+
+
+@keyframes warningBlink{
+
+
+    0%{
+
+
+        opacity:1;
+
+
+    }
+
+
+    50%{
+
+
+        opacity:0.4;
+
+
+    }
+
+
+    100%{
+
+
+        opacity:1;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   COUNTERS
+=========================== */
+
+
+#cars_inside{
+
+
+    color:#a855f7;
+
+
+}
+
+
+
+
+
+#total_entries{
+
+
+    color:#22c55e;
+
+
+}
+
+
+
+
+
+#total_exit{
+
+
+    color:#f97316;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   ONLINE STATUS
+=========================== */
+
+
+.online{
+
+
+    margin-top:35px;
+
+
+    padding:20px;
+
+
+    border-radius:15px;
+
+
+    background:#075c2c;
+
+
+    text-align:center;
+
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+
+#last_update{
+
+
+    color:#facc15;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   BUTTON
+=========================== */
+
+
+.history-btn{
+
+
+    display:block;
+
+
+    width:100%;
+
+
+    margin-top:30px;
+
+
+    padding:20px;
+
+
+
+    background:#075c2c;
+
+
+    color:white;
+
+
+
+    text-align:center;
+
+
+
+    border-radius:15px;
+
+
+
+    font-size:22px;
+
+
+
+    font-weight:bold;
+
+
+
+    text-decoration:none;
+
+
+
+    transition:0.3s;
+
+
+
+}
+
+
+
+
+
+
+.history-btn:hover{
+
+
+    background:#0a8f46;
+
+
+    transform:translateY(-3px);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   TABLE
+=========================== */
+
+
+table{
+
+
+    width:100%;
+
+
+    border-collapse:collapse;
+
+
+    color:white;
+
+
+    font-size:18px;
+
+
+}
+
+
+
+
+
+
+th{
+
+
+    background:#075c2c;
+
+
+    padding:15px;
+
+
+}
+
+
+
+
+
+
+td{
+
+
+    padding:12px;
+
+
+    text-align:center;
+
+
+    border-bottom:
+
+
+    1px solid rgba(255,255,255,0.15);
+
+
+}
+
+
+
+
+
+
+tr:hover{
+
+
+    background:
+
+
+    rgba(255,255,255,0.08);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   ADMIN BUTTONS
+=========================== */
+
+
+.admin-btn{
+
+
+    width:80%;
+
+
+    padding:18px;
+
+
+    margin:10px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    font-size:20px;
+
+
+    font-weight:bold;
+
+
+    color:white;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+
+
+
+.danger{
+
+
+    background:#dc2626;
+
+
+}
+
+
+
+
+
+
+.warning{
+
+
+    background:#f59e0b;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   CAMERA FUTURE PANEL
+=========================== */
+
+
+.camera-preview{
+
+
+    margin-top:30px;
+
+
+    border:1px dashed #38bdf8;
+
+
+}
+
+
+
+
+
+
+.camera-preview h3{
+
+
+    color:#facc15;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+
+@media(max-width:700px){
+
+
+
+    .grid{
+
+
+        grid-template-columns:1fr;
+
+
+    }
+
+
+
+
+
+    .overview-grid{
+
+
+        grid-template-columns:1fr;
+
+
+    }
+
+
+
+
+
+    h1{
+
+
+        font-size:32px;
+
+
+    }
+
+
+
+
+
+    .main-title{
+
+
+        flex-direction:column;
+
+
+    }
+
+
+
+
+
+    .moving-car{
+
+
+        animation-duration:2.5s;
+
+
+    }
+
+
+
+
+
+    .card{
+
+
+        padding:25px;
+
+
+    }
+
+
+
+
+
+    .card h1{
+
+
+        font-size:45px;
+
+
+    }
+
+
+
+
+
+    .navbar{
+
+
+        flex-direction:column;
+
+
+    }
+
+
+
+
+
+    .nav-btn{
+
+
+        text-align:center;
+
+
+    }
+
+
+
+
+
+    table{
+
+
+        font-size:13px;
+
+
+    }
+
+
+
+
+
+    .admin-btn{
+
+
+        width:100%;
+
+
+    }
+
+
+}

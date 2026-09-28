@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Admin Login
+</title>
+
+
+
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}"
+>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+
+
+
+
+<!-- HEADER -->
+
+
+<h1>
+
+🔐 Admin Login
+
+</h1>
+
+
+
+<p class="subtitle">
+
+Smart Parking System Secure Access
+
+</p>
+
+
+
+
+
+
+
+
+<!-- LOGIN CARD -->
+
+
+<div class="card login-card">
+
+
+
+
+
+<h2>
+
+⚙️ Administrator
+
+</h2>
+
+
+
+
+
+
+<form method="POST" action="/login">
+
+
+
+
+
+<input
+
+type="text"
+
+name="username"
+
+placeholder="Username"
+
+required
+
+>
+
+
+
+
+
+
+
+
+<input
+
+type="password"
+
+name="password"
+
+placeholder="Password"
+
+required
+
+>
+
+
+
+
+
+
+
+
+<button
+
+type="submit"
+
+class="admin-btn login-btn"
+
+>
+
+🔓 Login
+
+</button>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+{% if error %}
+
+<p class="error">
+
+{{ error }}
+
+</p>
+
+{% endif %}
+
+
+
+
+
+
+
+<p class="login-info">
+
+Admin Access Only
+
+</p>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<a href="/" class="history-btn">
+
+⬅ Back Dashboard
+
+</a>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<style>
+
+
+.login-card{
+
+
+    max-width:500px;
+
+    margin:auto;
+
+
+}
+
+
+
+
+
+
+.login-card h2{
+
+
+    margin-bottom:30px;
+
+
+}
+
+
+
+
+
+
+input{
+
+
+    width:90%;
+
+
+    padding:18px;
+
+
+    margin:12px;
+
+
+    border-radius:12px;
+
+
+    border:none;
+
+
+    font-size:18px;
+
+
+    outline:none;
+
+
+}
+
+
+
+
+
+
+input:focus{
+
+
+    box-shadow:0 0 10px #38bdf8;
+
+
+}
+
+
+
+
+
+
+.login-btn{
+
+
+    background:#075c2c;
+
+
+}
+
+
+
+
+
+
+.login-btn:hover{
+
+
+    background:#0a8f46;
+
+
+}
+
+
+
+
+
+
+.error{
+
+
+    color:#ef4444;
+
+
+    font-size:20px;
+
+
+    font-weight:bold;
+
+
+    margin-top:20px;
+
+
+}
+
+
+
+
+
+
+.login-info{
+
+
+    margin-top:20px;
+
+
+    color:#9fb3cc;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+</body>
+
+
+</html>
